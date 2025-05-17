@@ -1,0 +1,44 @@
+body {
+  background-color: var(--bg-color, #222);
+  color: var(--text-color, #eee);
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+#protection-status {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+
+button {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #c9302c;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+h3 {
+  margin-top: 30px;
+}
+
+#logs-list {
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: #111;
+  padding: 10px;
+  border-radius: 5px;
+  list-style-type: none;
+}
