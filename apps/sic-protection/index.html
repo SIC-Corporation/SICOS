@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SIC Protection</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="protection-status">Status: <span id="status-text">Active</span></div>
+  <button id="scan-btn">Run Manual Scan</button>
+  <label>
+    <input type="checkbox" id="scheduled-scan" />
+    Enable Scheduled Scans
+  </label>
+  <label>
+    <input type="checkbox" id="realtime-protection" checked />
+    Real-time Protection
+  </label>
+
+  <h3>Security Logs</h3>
+  <ul id="logs-list"></ul>
+
+  <script src="main.js"></script>
+</body>
+</html>
