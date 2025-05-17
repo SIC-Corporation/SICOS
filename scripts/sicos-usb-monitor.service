@@ -1,0 +1,11 @@
+[Unit]
+Description=SICOS USB Monitor Service
+After=network.target
+
+[Service]
+ExecStart=/full/path/to/scripts/usb_monitor.sh
+Restart=always
+User=your-username
+
+[Install]
+WantedBy=multi-user.target
