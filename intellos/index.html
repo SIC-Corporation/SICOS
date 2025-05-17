@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IntellOS Secure Login</title>
+  <style>
+    body {
+      margin: 0; 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #eee;
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      height: 100vh;
+      flex-direction: column;
+    }
+    .container {
+      background: rgba(0,0,0,0.7);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #000a;
+      width: 320px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    input[type="password"] {
+      width: 90%;
+      padding: 10px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      outline: none;
+    }
+    button {
+      background-color: #2196f3;
+      border: none;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #0b7dda;
+    }
+    .message {
+      margin-top: 15px;
+      color: #ff7070;
+      min-height: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="title">Set Your IntellOS Password</h1>
+    <input type="password" id="passwordInput" placeholder="Enter password" />
+    <input type="password" id="passwordConfirm" placeholder="Confirm password" />
+    <button id="submitBtn">Set Password</button>
+    <div class="message" id="message"></div>
+  </div>
+
+  <script>
+    // Check if password is saved (simulate with localStorage)
+    const storedPass = localStorage.getItem('intellosPassword');
+    const title = document.getElementById('title');
+    const passInput = document.getElementById('passwordInput');
+    const passConfirm = document.getElementById('passwordConfirm');
+    const submitBtn = document.getElementById('submitBtn');
+    const message = document.getElementById('message');
+
+    function showLogin() {
+      title.textContent = 'Enter IntellOS Password';
+      passConfirm.style.display = 'none';
+      submitBtn.textContent = 'Login';
+    }
+
+    function showSetup() {
+      title.textContent = 'Set Your IntellOS Password';
+      passConfirm.style.display = 'block';
+      submitBtn.textContent = 'Set Password';
+    }
+
+    if (storedPass) {
+      showLogin();
+    } else {
+      showSetup();
+    }
+
+    submitBtn.addEventListener('click', () => {
+      const passVal = passInput.value.trim();
+      const confirmVal = passConfirm.value.trim();
+
+      if (!passVal) {
+        message.textContent = 'Password cannot be empty.';
+        return;
+      }
+
+      if (storedPass) {
+        // Login flow
+        if (passVal === storedPass) {
+          message.style.color = '#4CAF50';
+          message.textContent = 'Access granted. Loading IntellOS...';
+          // TODO: launch main IntellOS UI
+          setTimeout(() => alert('Welcome to IntellOS!'), 1000);
+        } else {
+          message.style.color = '#ff7070';
+          message.textContent = 'Incorrect password. Try again.';
+        }
+      } else {
+        // Setup flow
+        if (passVal.length < 6) {
+          message.textContent = 'Password must be at least 6 characters.';
+          return;
+        }
+        if (passVal !== confirmVal) {
+          message.textContent = 'Passwords do not match.';
+          return;
+        }
+        localStorage.setItem('intellosPassword', passVal);
+        message.style.color = '#4CAF50';
+        message.textContent = 'Password set! Reloading...';
+        setTimeout(() => location.reload(), 1500);
+      }
+    });
+  </script>
+</body>
+</html>
