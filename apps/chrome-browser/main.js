@@ -1,3 +1,28 @@
+function isFirewallEnabled() {
+  return localStorage.getItem('firewallEnabled') === 'true';
+}
+
+function checkFirewallBeforeNavigate(url) {
+  if (isFirewallEnabled()) {
+    alert('Network access blocked by firewall!');
+    return false;
+  }
+  return true;
+}
+
+goBtn.onclick = () => {
+  let url = urlBar.value.trim();
+  if (!url) return;
+
+  if (!checkFirewallBeforeNavigate(url)) return;
+
+  if (!/^https?:\/\//i.test(url)) {
+    url = 'https://' + url;
+  }
+  browserFrame.src = url;
+};
+
+
 const backBtn = document.getElementById('back-btn');
 const forwardBtn = document.getElementById('forward-btn');
 const goBtn = document.getElementById('go-btn');
