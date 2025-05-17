@@ -1,0 +1,67 @@
+/* Top navigation bar */
+#top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: #1a1a1a;
+  border-bottom: 1px solid #e63946;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow:
+    0 2px 8px rgba(230, 57, 70, 0.6);
+  user-select: none;
+  z-index: 1000;
+}
+
+/* Left side (logo/title) */
+#top-bar-left {
+  font-weight: 900;
+  font-size: 1.4rem;
+  color: #e63946;
+  flex: 1;
+  letter-spacing: 1.5px;
+}
+
+/* Center (menus or tabs) */
+#top-bar-center {
+  flex: 2;
+  text-align: center;
+  color: #ddd;
+  font-weight: 600;
+}
+
+/* Right side (system icons) */
+#top-bar-right {
+  flex: 1;
+  text-align: right;
+  color: #ccc;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+/* Clock style */
+#clock {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+}
+
+/* Settings button style */
+#settings-btn {
+  background: none;
+  border: none;
+  color: #e63946;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  padding: 0;
+}
+
+#settings-btn:hover {
+  color: #ff4b5c;
+}
