@@ -1,38 +1,60 @@
 #!/bin/bash
 
-echo "=== SICOS User Creation Script ==="
+USER_DIR="users"
+ADMIN_FILE="$USER_DIR/admin_users.json"
+REGULAR_FILE="$USER_DIR/regular_users.json"
 
-# Prompt for username
-read -p "Enter new username: " username
+mkdir -p "$USER_DIR"
 
-# Check if username is empty
-if [ -z "$username" ]; then
-    echo "Username cannot be empty. Exiting."
-    exit 1
+echo "Create a new user"
+read -p "Enter username: " username
+
+# Check for empty username
+if [[ -z "$username" ]]; then
+  echo "Username cannot be empty."
+  exit 1
 fi
 
-# Check if user already exists
-if id "$username" &>/dev/null; then
-    echo "User '$username' already exists. Exiting."
-    exit 1
+# Read password silently and confirm
+while true; do
+  read -s -p "Enter password: " password
+  echo
+  read -s -p "Confirm password: " password_confirm
+  echo
+  [[ "$password" == "$password_confirm" ]] && break
+  echo "Passwords do not match, try again."
+done
+
+# Hash password
+password_hash=$(echo -n "$password" | sha256sum | awk '{print $1}')
+
+# Choose user type
+echo "Choose user type:"
+select user_type in "admin" "regular"; do
+  [[ "$user_type" == "admin" || "$user_type" == "regular" ]] && break
+  echo "Invalid option, choose 1 or 2."
+done
+
+# Select proper file
+if [[ "$user_type" == "admin" ]]; then
+  FILE="$ADMIN_FILE"
+else
+  FILE="$REGULAR_FILE"
 fi
 
-# Prompt for password (input hidden)
-read -s -p "Enter password for $username: " password
-echo
-read -s -p "Confirm password: " password_confirm
-echo
-
-# Check if passwords match
-if [ "$password" != "$password_confirm" ]; then
-    echo "Passwords do not match. Exiting."
-    exit 1
+# Initialize file if not exists
+if [[ ! -f "$FILE" ]]; then
+  echo "[]" > "$FILE"
 fi
 
-# Create the user with a home directory
-sudo useradd -m "$username"
+# Check if user exists
+if jq --arg u "$username" '.[] | select(.username == $u)' "$FILE" | grep -q .; then
+  echo "User '$username' already exists."
+  exit 1
+fi
 
-# Set the password for the user
-echo "$username:$password" | sudo chpasswd
+# Add new user to JSON array
+tmpfile=$(mktemp)
+jq --arg u "$username" --arg p "$password_hash" '. += [{"username": $u, "password_hash": $p}]' "$FILE" > "$tmpfile" && mv "$tmpfile" "$FILE"
 
-echo "User '$username' created successfully!"
+echo "User '$username' of type '$user_type' created successfully."
