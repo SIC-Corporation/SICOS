@@ -24,3 +24,17 @@
     <button id="settings-btn" title="Settings">⚙️</button>
   </div>
 </div>
+
+<script>
+  const clockEl = document.getElementById('clock');
+
+  function updateClock() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    clockEl.textContent = `${hours}:${minutes}`;
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>
