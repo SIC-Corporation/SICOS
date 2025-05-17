@@ -1,3 +1,21 @@
+function isFirewallEnabled() {
+  return localStorage.getItem('firewallEnabled') === 'true';
+}
+
+function checkFirewallBeforeNetwork() {
+  if (isFirewallEnabled()) {
+    alert('Network access blocked by firewall!');
+    return false;
+  }
+  return true;
+}
+
+// Example network action, call this before:
+if (!checkFirewallBeforeNetwork()) return;
+
+// proceed with network operation...
+
+
 const appContent = document.getElementById('app-content');
 
 const mockFileSystem = {
