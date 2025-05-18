@@ -1,0 +1,70 @@
+/* Reset + Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #0d1117;
+  color: #e6edf3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* Setup Box */
+.setup-container {
+  background: #161b22;
+  padding: 30px 40px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  border: 1px solid #30363d;
+}
+
+/* Titles */
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #58a6ff;
+}
+
+/* Labels & Questions */
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.admin-section {
+  margin-top: 20px;
+  padding-top: 10px;
+  border-top: 1px solid #30363d;
+  display: none;
+}
+
+/* Radio Buttons */
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+/* Button */
+button {
+  margin-top: 30px;
+  background-color: #238636;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #2ea043;
+}
